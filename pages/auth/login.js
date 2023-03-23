@@ -29,7 +29,7 @@ export default function Login() {
 
   return (
     <div className="shadow-xl mt-32 p-10 textgray-800 rounded-lg">
-      <h2 className="text-2xl font-medium">Join Today</h2>
+      <h2 className="text-2xl font-medium">Sign in</h2>
       <div className="py-4">
         <h3 className="py-4">Sign in with a Provider</h3>
         <button

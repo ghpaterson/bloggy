@@ -15,17 +15,17 @@ export default function NavBar() {
       <ul className="flex items-center gap-10">
         {!user && (
           <Link href={"/auth/login"}>
-            <button>Join Now</button>
+            <button>Sign in</button>
           </Link>
         )}
         {user && (
           <div className="flex items-center gap-6">
-            <Link href="/post">
-              <button>Post</button>
+            <Link href="/music">
+              <button>Music</button>
             </Link>
             <Link href="/dashboard">
-              <BsPerson className="text-2xl" />
-              {/* <button>Profile</button> */}
+              {/* <BsPerson className="text-2xl" /> */}
+              <button>Account</button>
               {/* <img src={user.photoUrl} /> */}
             </Link>
           </div>
