@@ -3,6 +3,7 @@ import { auth, db } from "../utils/firebase";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 export default function Music() {
   //form state
@@ -13,6 +14,25 @@ export default function Music() {
   //submit post
   const submitPost = async (e) => {
     e.preventDefault();
+
+    //run checks for description
+    if (!post.description) {
+      toast.error("Field Empty", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
+
+      return;
+    }
+
+    if (post.description.length > 300) {
+      toast.error("Too many characters", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+      });
+
+      return;
+    }
     //make a new post
     const collectionRef = collection(db, "posts");
     await addDoc(collectionRef, {
