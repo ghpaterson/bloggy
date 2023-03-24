@@ -2,8 +2,11 @@ import React from "react";
 
 export default function MusicPost({ children, username, description }) {
   const convertLinks = (text) => {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+    const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/g;
+    return text.replace(urlRegex, (url) => {
+      const href = url.match(/^https?:/) ? url : `http://${url}`;
+      return `<a href="${href}" target="_blank">${url}</a>`;
+    });
   };
 
   const formattedDescription = convertLinks(description);
