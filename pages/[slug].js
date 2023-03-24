@@ -3,7 +3,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { auth, db } from "../utils/firebase";
 import { toast } from "react-toastify";
-import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  onSnapshot,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 
 export default function Details() {
   const router = useRouter();
@@ -34,6 +41,20 @@ export default function Details() {
     setComment("");
   };
 
+  // get comments
+  const getComments = async () => {
+    const docRef = doc(db, "posts", routeData.id);
+    const unsubscribe = onSnapshot(docRef, (snapshot) => {
+      setAllComment(snapshot.data().comments);
+    });
+    return unsubscribe;
+  };
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    getComments();
+  }, []);
+
   return (
     <div>
       <MusicPost {...routeData}></MusicPost>
@@ -55,11 +76,14 @@ export default function Details() {
         </div>
         <div className="py-6 ">
           <h2>Comments</h2>
-          {/* {setAllComment?.map((comment) => (
-            <div>
-              <div></div>
+          {allComment?.map((comment) => (
+            <div className="bg-gray-100 p-4 my-4 border-2" key={comment.time}>
+              <div>
+                <h2>{comment.userName}</h2>
+              </div>
+              <h2 className="text-sm text-gray-800">{comment.comment}</h2>
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
     </div>
