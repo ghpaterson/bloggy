@@ -53,7 +53,7 @@ export default function Details() {
   useEffect(() => {
     if (!router.isReady) return;
     getComments();
-  }, []);
+  }, [router.isReady]);
 
   return (
     <div>

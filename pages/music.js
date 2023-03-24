@@ -127,7 +127,9 @@ export default function Music() {
         {musicPosts.map((post) => (
           <MusicPost {...post} key={post.id}>
             <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
-              <button>Comment</button>
+              <button>
+                {post.comments?.length > 0 ? post.comments?.length : 0} Comments
+              </button>
             </Link>
           </MusicPost>
         ))}
