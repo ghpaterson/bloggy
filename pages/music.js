@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import MusicPost from "@/components/musicPost";
+import Link from "next/link";
 
 export default function Music() {
   //form state
@@ -60,6 +61,7 @@ export default function Music() {
         username: user.displayName,
       });
       setPost({ description: "" });
+
       return route.push("/music");
     }
   };
@@ -123,7 +125,11 @@ export default function Music() {
       <div>
         <h2>Here are the posts</h2>
         {musicPosts.map((post) => (
-          <MusicPost {...post} key={post.id}></MusicPost>
+          <MusicPost {...post} key={post.id}>
+            <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
+              <button>Comment</button>
+            </Link>
+          </MusicPost>
         ))}
       </div>
     </>
