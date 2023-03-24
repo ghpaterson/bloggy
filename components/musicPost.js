@@ -1,11 +1,23 @@
+import React from "react";
+
 export default function MusicPost({ children, username, description }) {
+  const convertLinks = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+  };
+
+  const formattedDescription = convertLinks(description);
+
   return (
     <div className="bg-gray-100 p-8 border-b-2 rounded-lg">
       <div className="flex items-center gap-2">
         <h2 className="text-md text-gray-800">{username}</h2>
       </div>
       <div className="py-4">
-        <p className="text-sm text-gray-600">{description}</p>
+        <p
+          className="text-sm text-gray-600"
+          dangerouslySetInnerHTML={{ __html: formattedDescription }}
+        />
       </div>
       {children}
     </div>

@@ -97,6 +97,11 @@ export default function Music() {
     checkUser();
   }, [user, loading]);
 
+  // const convertLinks = (text) => {
+  //   const urlRegex = /(https?:\/\/[^\s]+)/g;
+  //   return text.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+  // };
+
   return (
     <>
       <div className="my-10 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
