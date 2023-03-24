@@ -51,7 +51,7 @@ export default function Music() {
       username: user.displayName,
     });
     setPost({ description: "" });
-    return route.push("/");
+    return route.push("/music");
   };
 
   //create a state with all the music posts

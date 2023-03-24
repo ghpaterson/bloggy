@@ -2,8 +2,16 @@ import { auth, db } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import MusicPost from "@/components/musicPost";
+import { async } from "@firebase/util";
 
 export default function Dashboard() {
   const route = useRouter();
@@ -22,6 +30,12 @@ export default function Dashboard() {
     return unsubscribe;
   };
 
+  //delete users post
+  const deletePost = async (id) => {
+    const docRef = doc(db, "posts", id);
+    await deleteDoc(docRef);
+  };
+
   //get users data
   useEffect(() => {
     getData();
@@ -32,10 +46,29 @@ export default function Dashboard() {
       <h1>Your Posts</h1>
       <div>
         {posts.map((post) => {
-          return <MusicPost {...post} key={post.id}></MusicPost>;
+          return (
+            <MusicPost {...post} key={post.id}>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => deletePost(post.id)}
+                  className="text-sm flex items-center justify-center"
+                >
+                  Delete
+                </button>
+                <button className="text-sm flex items-center justify-center">
+                  Edit
+                </button>
+              </div>
+            </MusicPost>
+          );
         })}
       </div>
-      <button onClick={() => auth.signOut()}>Sign out</button>
+      <button
+        className="bg-gray-800 text-gray-100 rounded-md py-1 px-2 my-4"
+        onClick={() => auth.signOut()}
+      >
+        Sign out
+      </button>
     </div>
   );
 }
