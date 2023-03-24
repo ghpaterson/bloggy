@@ -100,7 +100,7 @@ export default function Music() {
       <div>
         <h2>Here are the posts</h2>
         {musicPosts.map((post) => (
-          <MusicPost {...post}></MusicPost>
+          <MusicPost {...post} key={post.id}></MusicPost>
         ))}
       </div>
     </>
