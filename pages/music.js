@@ -99,21 +99,20 @@ export default function Music() {
 
   return (
     <>
-      <div className="my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto">
+      <div className="my-10 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
         <form onSubmit={submitPost}>
           <h1>{post.hasOwnProperty("id") ? "Edit Post" : "New Post"}</h1>
           <div className="py-2">
-            <h3>Description</h3>
             <textarea
               value={post.description}
               onChange={(e) =>
                 setPost({ ...post, description: e.target.value })
               }
-              className="bg-gray-800 h-48 w-full text-gray-100 rounded-lg p-2 text-sm"
+              className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm"
             ></textarea>
             <p
-              className={`text-cyan-600 ${
-                post.description.length > 300 ? "text-red-500" : ""
+              className={`text-gray-600 ${
+                post.description.length > 300 ? "text-pink-500" : ""
               }`}
             >
               {post.description.length}/300
