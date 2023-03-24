@@ -7,6 +7,7 @@ import {
   collection,
   onSnapshot,
   orderBy,
+  query,
   queryEqual,
   serverTimestamp,
 } from "firebase/firestore";
@@ -58,12 +59,18 @@ export default function Music() {
 
   const getMusicPosts = async () => {
     const collectionRef = collection(db, "posts");
-    const q = queryEqual(collectionRef, orderBy("timestamp", "desc"));
+    const q = query(collectionRef, orderBy("timestamp", "desc"));
     const unsubscribe = onSnapshot(q, (musicSnapshot) => {
-      setMusicPosts(musicSnapshot.docs.map((doc) => ({ ...doc.data() })));
+      setMusicPosts(
+        musicSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
     });
     return unsubscribe;
   };
+
+  useEffect(() => {
+    getMusicPosts();
+  }, []);
 
   return (
     <>
@@ -92,8 +99,9 @@ export default function Music() {
       </div>
       <div>
         <h2>Here are the posts</h2>
-        <MusicPost />
-        <MusicPost />
+        {musicPosts.map((post) => (
+          <MusicPost {...post}></MusicPost>
+        ))}
       </div>
     </>
   );
