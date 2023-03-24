@@ -2,8 +2,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../utils/firebase";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  queryEqual,
+  serverTimestamp,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
+import MusicPost from "@/components/musicPost";
 
 export default function Music() {
   //form state
@@ -45,27 +53,48 @@ export default function Music() {
     return route.push("/");
   };
 
+  //create a state with all the music posts
+  const [musicPosts, setMusicPosts] = useState([]);
+
+  const getMusicPosts = async () => {
+    const collectionRef = collection(db, "posts");
+    const q = queryEqual(collectionRef, orderBy("timestamp", "desc"));
+    const unsubscribe = onSnapshot(q, (musicSnapshot) => {
+      setMusicPosts(musicSnapshot.docs.map((doc) => ({ ...doc.data() })));
+    });
+    return unsubscribe;
+  };
+
   return (
-    <div className="my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto">
-      <form onSubmit={submitPost}>
-        <h1>New Post</h1>
-        <div className="py-2">
-          <h3>Description</h3>
-          <textarea
-            value={post.description}
-            onChange={(e) => setPost({ ...post, description: e.target.value })}
-            className="bg-gray-800 h-48 w-full text-gray-100 rounded-lg p-2 text-sm"
-          ></textarea>
-          <p
-            className={`text-cyan-600 ${
-              post.description.length > 300 ? "text-red-500" : ""
-            }`}
-          >
-            {post.description.length}/300
-          </p>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <>
+      <div className="my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto">
+        <form onSubmit={submitPost}>
+          <h1>New Post</h1>
+          <div className="py-2">
+            <h3>Description</h3>
+            <textarea
+              value={post.description}
+              onChange={(e) =>
+                setPost({ ...post, description: e.target.value })
+              }
+              className="bg-gray-800 h-48 w-full text-gray-100 rounded-lg p-2 text-sm"
+            ></textarea>
+            <p
+              className={`text-cyan-600 ${
+                post.description.length > 300 ? "text-red-500" : ""
+              }`}
+            >
+              {post.description.length}/300
+            </p>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <div>
+        <h2>Here are the posts</h2>
+        <MusicPost />
+        <MusicPost />
+      </div>
+    </>
   );
 }
