@@ -11,7 +11,7 @@ import {
   where,
 } from "firebase/firestore";
 import MusicPost from "@/components/musicPost";
-import { async } from "@firebase/util";
+import Link from "next/link";
 
 export default function Dashboard() {
   const route = useRouter();
@@ -55,9 +55,11 @@ export default function Dashboard() {
                 >
                   Delete
                 </button>
-                <button className="text-sm flex items-center justify-center">
-                  Edit
-                </button>
+                <Link href={{ pathname: "/music", query: post }}>
+                  <button className="text-sm flex items-center justify-center">
+                    Edit
+                  </button>
+                </Link>
               </div>
             </MusicPost>
           );

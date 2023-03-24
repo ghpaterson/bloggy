@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import {
   addDoc,
   collection,
+  doc,
   onSnapshot,
   orderBy,
   query,
-  queryEqual,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import MusicPost from "@/components/musicPost";
@@ -19,6 +20,7 @@ export default function Music() {
   const [post, setPost] = useState({ description: "" });
   const [user, loading] = useAuthState(auth);
   const route = useRouter();
+  const updatePost = route.query;
 
   //submit post
   const submitPost = async (e) => {
@@ -42,16 +44,24 @@ export default function Music() {
 
       return;
     }
-    //make a new post
-    const collectionRef = collection(db, "posts");
-    await addDoc(collectionRef, {
-      ...post,
-      timestamp: serverTimestamp(),
-      user: user.uid,
-      username: user.displayName,
-    });
-    setPost({ description: "" });
-    return route.push("/music");
+
+    if (post?.hasOwnProperty("id")) {
+      const docRef = doc(db, "posts", post.id);
+      const updatedPost = { ...post, timestamp: serverTimestamp() };
+      await updateDoc(docRef, updatedPost);
+      return route.push("/music");
+    } else {
+      //make a new post
+      const collectionRef = collection(db, "posts");
+      await addDoc(collectionRef, {
+        ...post,
+        timestamp: serverTimestamp(),
+        user: user.uid,
+        username: user.displayName,
+      });
+      setPost({ description: "" });
+      return route.push("/music");
+    }
   };
 
   //create a state with all the music posts
@@ -72,11 +82,24 @@ export default function Music() {
     getMusicPosts();
   }, []);
 
+  //check our user
+  const checkUser = async () => {
+    if (loading) return;
+    if (!user) route.push("/auth/login");
+    if (updatePost.id) {
+      setPost({ description: updatePost.description, id: updatePost.id });
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, [user, loading]);
+
   return (
     <>
       <div className="my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto">
         <form onSubmit={submitPost}>
-          <h1>New Post</h1>
+          <h1>{post.hasOwnProperty("id") ? "Edit Post" : "New Post"}</h1>
           <div className="py-2">
             <h3>Description</h3>
             <textarea
