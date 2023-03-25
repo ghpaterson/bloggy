@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Image from "next/image";
+import mrbloggy from "../public/mrbloggy.png";
 
 export default function Home() {
   return (
@@ -9,7 +11,22 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <main>
+        <div className="flex items-center justify-center my-20">
+          <div className="pb-40 bg-transparent -mr-20 z-0 md:-mr-12">
+            <h1 className=" font-coustard ml-10 text-3xl md:text-6xl md:ml-0">
+              Mr Bloggy
+            </h1>
+          </div>
+          <div>
+            <Image
+              src={mrbloggy}
+              width={400}
+              className=" -ml-8 rounded-lg mb-10 md:ml-0"
+            />
+          </div>
+        </div>
+      </main>
     </>
   );
 }

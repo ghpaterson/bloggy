@@ -2,9 +2,11 @@ import NavBar from "./navBar";
 
 export default function Layout({ children }) {
   return (
-    <div className="font-poppins mx-6 md:max-w-4xl md:mx-auto">
+    <div className=" font-poppins max-w-4xl  md:max-w-full">
       <NavBar />
-      <main>{children}</main>
+      <main className="">
+        <div>{children}</div>
+      </main>
     </div>
   );
 }

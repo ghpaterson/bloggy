@@ -43,34 +43,36 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1>Your Posts</h1>
       <div>
-        {posts.map((post) => {
-          return (
-            <MusicPost {...post} key={post.id}>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => deletePost(post.id)}
-                  className="text-sm flex items-center justify-center"
-                >
-                  Delete
-                </button>
-                <Link href={{ pathname: "/music", query: post }}>
-                  <button className="text-sm flex items-center justify-center">
-                    Edit
+        <h1>Your Posts</h1>
+        <div>
+          {posts.map((post) => {
+            return (
+              <MusicPost {...post} key={post.id}>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => deletePost(post.id)}
+                    className="text-sm flex items-center justify-center"
+                  >
+                    Delete
                   </button>
-                </Link>
-              </div>
-            </MusicPost>
-          );
-        })}
+                  <Link href={{ pathname: "/music", query: post }}>
+                    <button className="text-sm flex items-center justify-center">
+                      Edit
+                    </button>
+                  </Link>
+                </div>
+              </MusicPost>
+            );
+          })}
+        </div>
+        <button
+          className="bg-gray-800 text-gray-100 rounded-md py-1 px-2 my-4"
+          onClick={() => auth.signOut()}
+        >
+          Sign out
+        </button>
       </div>
-      <button
-        className="bg-gray-800 text-gray-100 rounded-md py-1 px-2 my-4"
-        onClick={() => auth.signOut()}
-      >
-        Sign out
-      </button>
     </div>
   );
 }
