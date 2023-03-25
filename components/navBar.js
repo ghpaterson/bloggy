@@ -9,29 +9,39 @@ export default function NavBar() {
   return (
     <nav className=" bg-pinkbloggy flex justify-between items-center  py-10">
       <Link href="/">
-        <button className="text-gray-50 mx-4 md:mx-60 md:text-xl">
-          Mr. Bloggy
+        <button className="text-gray-50 mx-4 md:mx-60 md:text-xl hover:scale-125">
+          mr bloggy
         </button>
       </Link>
       <ul className="flex items-center gap-10">
         {!user && (
           <Link href={"/auth/login"}>
-            <button className="text-gray-900 mx-4">Sign in</button>
+            <button className="text-gray-50 mx-4 hover:scale-125 md:mx-60">
+              sign in
+            </button>
           </Link>
         )}
         {user && (
-          <div className="flex items-center gap-1 text-sm md:text-md md:mx-60">
+          <div className="flex items-center gap-1 text-sm  md:text-md md:mx-60">
             <Link href="/music">
-              <button className="text-gray-900 mx-4">Food</button>
+              <button className="text-gray-50 mx-4 hover:scale-125">
+                food
+              </button>
             </Link>
             <Link href="/music">
-              <button className="text-gray-900 mx-4">Design</button>
+              <button className="text-gray-50 mx-4 hover:scale-125">
+                design
+              </button>
             </Link>
             <Link href="/music">
-              <button className="text-gray-900 mx-4">Music</button>
+              <button className="text-gray-50 mx-4 hover:scale-125">
+                music
+              </button>
             </Link>
             <Link href="/dashboard">
-              <button className="text-gray-900 mx-4">Account</button>
+              <button className="text-gray-50 mx-4 hover:scale-125">
+                account
+              </button>
             </Link>
           </div>
         )}

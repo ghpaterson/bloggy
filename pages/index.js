@@ -12,10 +12,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="flex items-center justify-center my-20">
-          <div className="pb-40 bg-transparent -mr-20 z-0 md:-mr-12">
-            <h1 className=" font-coustard text-blackbloggy ml-10 text-3xl md:text-6xl md:ml-0">
-              Mr Bloggy
+        <div className=" bg-pinkbloggy max-w-full h-48"></div>
+        <div className="flex items-center justify-center my-20 -mt-32 md:-mt-32">
+          <div className="pb-40 bg-transparent -mr-12 mt-4 z-0 md:-mr-12 md:mt-0">
+            <h1 className=" font-coustard text-blackbloggy ml-6 mt-6 text-2xl md:text-6xl md:ml-0 md:-mt-8">
+              mr bloggy
             </h1>
           </div>
           <div>

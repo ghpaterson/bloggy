@@ -9,6 +9,13 @@ export default function MusicPost({ children, username, description }) {
     });
   };
 
+  const timestamp = new Date().getTime(); // Returns the current Unix timestamp
+  // const formatDate = (timestamp) => {
+  //   const date = new Date(timestamp);
+  //   const options = { year: "numeric", month: "long", day: "numeric" };
+  //   return date.toLocaleDateString("en-US", options);
+  // };
+
   const formattedDescription = convertLinks(description);
 
   return (
@@ -23,6 +30,13 @@ export default function MusicPost({ children, username, description }) {
         />
       </div>
       {children}
+      <div>
+        {timestamp && (
+          <span className="text-sm text-gray-400">
+            {new Date(timestamp).toLocaleString()}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

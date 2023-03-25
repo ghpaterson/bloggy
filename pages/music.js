@@ -113,10 +113,10 @@ export default function Music() {
               onChange={(e) =>
                 setPost({ ...post, description: e.target.value })
               }
-              className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm"
+              className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-pinkbloggy"
             ></textarea>
             <p
-              className={`text-gray-600 ${
+              className={`text-gray-600 text-xs ${
                 post.description.length > 300 ? "text-pink-500" : ""
               }`}
             >
