@@ -14,7 +14,7 @@ export default function Home() {
       <main>
         <div className="flex items-center justify-center my-20">
           <div className="pb-40 bg-transparent -mr-20 z-0 md:-mr-12">
-            <h1 className=" font-coustard ml-10 text-3xl md:text-6xl md:ml-0">
+            <h1 className=" font-coustard text-blackbloggy ml-10 text-3xl md:text-6xl md:ml-0">
               Mr Bloggy
             </h1>
           </div>

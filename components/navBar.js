@@ -1,16 +1,15 @@
 import Link from "next/link";
 import { auth } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { BsPerson } from "react-icons/bs";
 
 export default function NavBar() {
   const [user, loading] = useAuthState(auth);
   console.log(user);
 
   return (
-    <nav className=" bg-pink-500 flex justify-between items-center  py-10">
+    <nav className=" bg-pinkbloggy flex justify-between items-center  py-10">
       <Link href="/">
-        <button className="text-gray-900 mx-4 md:mx-60 md:text-xl">
+        <button className="text-gray-50 mx-4 md:mx-60 md:text-xl">
           Mr. Bloggy
         </button>
       </Link>

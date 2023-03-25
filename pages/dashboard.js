@@ -67,7 +67,7 @@ export default function Dashboard() {
           })}
         </div>
         <button
-          className="bg-gray-800 text-gray-100 rounded-md py-1 px-2 my-4"
+          className="bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 my-4"
           onClick={() => auth.signOut()}
         >
           Sign out
