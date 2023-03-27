@@ -56,6 +56,7 @@ export default function Music() {
       const collectionRef = collection(db, "posts");
       await addDoc(collectionRef, {
         ...post,
+        type: "music",
         timestamp: serverTimestamp(),
         user: user.uid,
         username: user.displayName,

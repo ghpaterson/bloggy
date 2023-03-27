@@ -56,6 +56,7 @@ export default function Food() {
       const collectionRef = collection(db, "food");
       await addDoc(collectionRef, {
         ...foodPost,
+        type: "food",
         timestamp: serverTimestamp(),
         user: user.uid,
         username: user.displayName,
