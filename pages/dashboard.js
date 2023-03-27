@@ -68,12 +68,14 @@ export default function Dashboard() {
             );
           })}
         </div>
-        <button
-          className="bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 my-4"
-          onClick={() => auth.signOut()}
-        >
-          Sign out
-        </button>
+        <div className=" ml-96">
+          <button
+            className="bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 my-4"
+            onClick={() => auth.signOut()}
+          >
+            Sign out
+          </button>
+        </div>
       </div>
     </div>
   );
