@@ -44,8 +44,10 @@ export default function Dashboard() {
   return (
     <div>
       <div>
-        <h1>Your Posts</h1>
-        <div>
+        <h1 className="flex justify-center text-xl text-blackbloggy py-6">
+          Your Posts
+        </h1>
+        <div className="max-w-4xl mx-auto space-y-6">
           {posts.map((post) => {
             return (
               <MusicPost {...post} key={post.id}>
