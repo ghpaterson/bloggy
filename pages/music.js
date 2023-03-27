@@ -101,7 +101,9 @@ export default function Music() {
     <>
       <div className="my-10 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
         <form onSubmit={submitPost}>
-          <h1>{post.hasOwnProperty("id") ? "Edit Post" : "New Post"}</h1>
+          <h1 className="flex justify-center">
+            {post.hasOwnProperty("id") ? "Edit Post" : "New Post"}
+          </h1>
           <div className="py-2">
             <textarea
               value={post.description}
@@ -118,11 +120,18 @@ export default function Music() {
               {post.description.length}/300
             </p>
           </div>
-          <button type="submit">Submit</button>
+          <button
+            className="bg-yellowbloggy py-1 px-1 rounded-md"
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
       </div>
       <div>
-        <h2>Here are the posts</h2>
+        <h2 className="flex justify-center py-4">Latest in Music</h2>
+      </div>
+      <div className="py-4 max-w-4xl space-y-6 mx-auto">
         {musicPosts.map((post) => (
           <MusicPost {...post} key={post.id} timestamp={post.timestamp}>
             <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
