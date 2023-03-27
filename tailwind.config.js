@@ -6,6 +6,12 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: "Poppins",
+        coustard: "Coustard",
+      },
+      colors: {
+        yellowbloggy: "#FCE000",
+        pinkbloggy: "#EA6EB0",
+        blackbloggy: "#312424",
       },
     },
   },
