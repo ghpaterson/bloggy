@@ -97,11 +97,6 @@ export default function Music() {
     checkUser();
   }, [user, loading]);
 
-  // const convertLinks = (text) => {
-  //   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  //   return text.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
-  // };
-
   return (
     <>
       <div className="my-10 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
@@ -129,7 +124,7 @@ export default function Music() {
       <div>
         <h2>Here are the posts</h2>
         {musicPosts.map((post) => (
-          <MusicPost {...post} key={post.id}>
+          <MusicPost {...post} key={post.id} timestamp={post.timestamp}>
             <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
               <button>
                 {post.comments?.length > 0 ? post.comments?.length : 0} Comments

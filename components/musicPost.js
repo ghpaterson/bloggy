@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function MusicPost({ children, username, description }) {
+export default function MusicPost({
+  children,
+  username,
+  description,
+  timestamp,
+}) {
   const convertLinks = (text) => {
     const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/g;
     return text.replace(urlRegex, (url) => {
@@ -8,13 +13,6 @@ export default function MusicPost({ children, username, description }) {
       return `<a href="${href}" target="_blank">${url}</a>`;
     });
   };
-
-  const timestamp = new Date().getTime(); // Returns the current Unix timestamp
-  // const formatDate = (timestamp) => {
-  //   const date = new Date(timestamp);
-  //   const options = { year: "numeric", month: "long", day: "numeric" };
-  //   return date.toLocaleDateString("en-US", options);
-  // };
 
   const formattedDescription = convertLinks(description);
 
@@ -30,12 +28,8 @@ export default function MusicPost({ children, username, description }) {
         />
       </div>
       {children}
-      <div>
-        {timestamp && (
-          <span className="text-sm text-gray-400">
-            {new Date(timestamp).toLocaleString()}
-          </span>
-        )}
+      <div className="text-sm text-gray-800 py-1">
+        {new Date(timestamp?.toDate()).toLocaleString()}
       </div>
     </div>
   );
