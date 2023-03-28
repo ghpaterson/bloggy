@@ -90,7 +90,7 @@ export default function Design() {
     if (loading) return;
     if (!user) route.push("/auth/login");
     if (updatePost.id) {
-      setPost({ description: updatePost.description, id: updatePost.id });
+      setDesignPost({ description: updatePost.description, id: updatePost.id });
     }
   };
 

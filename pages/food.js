@@ -90,7 +90,7 @@ export default function Food() {
     if (loading) return;
     if (!user) route.push("/auth/login");
     if (updatePost.id) {
-      setPost({ description: updatePost.description, id: updatePost.id });
+      setFoodPost({ description: updatePost.description, id: updatePost.id });
     }
   };
 

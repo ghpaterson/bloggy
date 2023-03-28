@@ -135,7 +135,7 @@ export default function Dashboard() {
           </h1>
           <div className="flex justify-center">
             <button
-              className=" bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 my-6"
+              className=" bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 mb-6"
               onClick={() => auth.signOut()}
             >
               Sign out
@@ -190,7 +190,7 @@ export default function Dashboard() {
                     >
                       Delete
                     </button>
-                    <Link href={{ pathname: "/food", query: post }}>
+                    <Link href={{ pathname: "/design", query: post }}>
                       <button className="text-sm flex items-center justify-center">
                         Edit
                       </button>
