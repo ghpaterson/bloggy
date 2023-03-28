@@ -15,43 +15,73 @@ import MusicPost from "@/components/musicPost";
 import FoodPost from "@/components/foodPost";
 import Link from "next/link";
 
-export default function Dashboard({ username }) {
+export default function Dashboard() {
   const route = useRouter();
   const [user, loading] = useAuthState(auth);
   const [posts, setPosts] = useState([]);
+  const [postUnsubscribe, setPostUnsubscribe] = useState(null);
+  const [foodUnsubscribe, setFoodUnsubscribe] = useState(null);
 
-  // see if user is logged in
-  const getData = async () => {
-    if (loading) return;
-    if (!user) return route.push("/auth/login");
-    const collectionRef = collection(db, "posts");
-    const foodCollectionRef = collection(db, "food");
+  // get users data
+  useEffect(() => {
+    const fetchData = async () => {
+      if (loading) return;
+      if (!user) return route.push("/auth/login");
 
-    const q = query(collectionRef, where("user", "==", user.uid));
-    const foodQ = query(foodCollectionRef, where("user", "==", user.uid));
+      const collectionRef = collection(db, "posts");
+      const foodCollectionRef = collection(db, "food");
 
-    const [snapshot, foodSnapshot] = await Promise.all([
-      getDocs(q),
-      getDocs(foodQ),
-    ]);
+      const q = query(collectionRef, where("user", "==", user.uid));
+      const foodQ = query(foodCollectionRef, where("user", "==", user.uid));
 
-    const postsData = snapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    const foodData = foodSnapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
+      const [snapshot, foodSnapshot] = await Promise.all([
+        getDocs(q),
+        getDocs(foodQ),
+      ]);
 
-    setPosts([...postsData, ...foodData]);
-    console.log(posts.type);
+      const postsData = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      const foodData = foodSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
 
-    //   const unsubscribe = onSnapshot(q, (snapshot) => {
-    //     setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    //   });
-    //   return unsubscribe;
-  };
+      setPosts([...postsData, ...foodData]);
+
+      const postUnsub = onSnapshot(q, (snapshot) => {
+        setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      });
+      setPostUnsubscribe(() => postUnsub);
+
+      const foodUnsub = onSnapshot(foodQ, (snapshot) => {
+        setPosts((prevPosts) => {
+          const foodPosts = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+            type: "food",
+          }));
+          return [
+            ...prevPosts.filter((post) => post.type !== "food"),
+            ...foodPosts,
+          ];
+        });
+      });
+      setFoodUnsubscribe(() => foodUnsub);
+    };
+
+    fetchData();
+
+    return () => {
+      if (postUnsubscribe) {
+        postUnsubscribe();
+      }
+      if (foodUnsubscribe) {
+        foodUnsubscribe();
+      }
+    };
+  }, [user, loading]);
 
   //delete users post
   const deletePost = async (id) => {
@@ -64,16 +94,11 @@ export default function Dashboard({ username }) {
     await deleteDoc(docRef);
   };
 
-  //get users data
-  useEffect(() => {
-    getData();
-  }, [user, loading]);
-
   return (
     <div>
       <div>
         <h1 className="flex justify-center text-xl text-blackbloggy py-6">
-          {user.displayName}'s Posts
+          {user ? `${user.displayName}'s Posts` : ""}
         </h1>
         <div className="max-w-4xl mx-auto space-y-6">
           {posts.map((post) => {
