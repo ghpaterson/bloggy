@@ -28,7 +28,7 @@ export default function NavBar() {
                 food
               </button>
             </Link>
-            <Link href="/music">
+            <Link href="/design">
               <button className="text-gray-50 mx-4 hover:scale-125">
                 design
               </button>
