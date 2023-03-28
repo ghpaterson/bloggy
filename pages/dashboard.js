@@ -15,7 +15,7 @@ import MusicPost from "@/components/musicPost";
 import FoodPost from "@/components/foodPost";
 import Link from "next/link";
 
-export default function Dashboard() {
+export default function Dashboard({ username }) {
   const route = useRouter();
   const [user, loading] = useAuthState(auth);
   const [posts, setPosts] = useState([]);
@@ -73,7 +73,7 @@ export default function Dashboard() {
     <div>
       <div>
         <h1 className="flex justify-center text-xl text-blackbloggy py-6">
-          Your Posts
+          {user.displayName}'s Posts
         </h1>
         <div className="max-w-4xl mx-auto space-y-6">
           {posts.map((post) => {
