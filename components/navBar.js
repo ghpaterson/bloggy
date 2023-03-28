@@ -23,7 +23,7 @@ export default function NavBar() {
         )}
         {user && (
           <div className="flex items-center gap-1 text-sm  md:text-md md:mx-60">
-            <Link href="/music">
+            <Link href="/food">
               <button className="text-gray-50 mx-4 hover:scale-125">
                 food
               </button>

@@ -13,22 +13,22 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
-import MusicPost from "@/components/musicPost";
+import FoodPost from "@/components/foodPost";
 import Link from "next/link";
 
-export default function Music() {
+export default function Food() {
   //form state
-  const [post, setPost] = useState({ description: "" });
+  const [foodPost, setFoodPost] = useState({ description: "" });
   const [user, loading] = useAuthState(auth);
   const route = useRouter();
   const updatePost = route.query;
 
   //submit post
-  const submitPost = async (e) => {
+  const submitFoodPost = async (e) => {
     e.preventDefault();
 
     //run checks for description
-    if (!post.description) {
+    if (!foodPost.description) {
       toast.error("Field Empty", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000,
@@ -37,7 +37,7 @@ export default function Music() {
       return;
     }
 
-    if (post.description.length > 300) {
+    if (foodPost.description.length > 300) {
       toast.error("Too many characters", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000,
@@ -46,43 +46,43 @@ export default function Music() {
       return;
     }
 
-    if (post?.hasOwnProperty("id")) {
-      const docRef = doc(db, "posts", post.id);
-      const updatedPost = { ...post, timestamp: serverTimestamp() };
+    if (foodPost?.hasOwnProperty("id")) {
+      const docRef = doc(db, "food", foodPost.id);
+      const updatedPost = { ...foodPost, timestamp: serverTimestamp() };
       await updateDoc(docRef, updatedPost);
-      return route.push("/music");
+      return route.push("/food");
     } else {
       //make a new post
-      const collectionRef = collection(db, "posts");
+      const collectionRef = collection(db, "food");
       await addDoc(collectionRef, {
-        ...post,
-        type: "music",
+        ...foodPost,
+        type: "food",
         timestamp: serverTimestamp(),
         user: user.uid,
         username: user.displayName,
       });
-      setPost({ description: "" });
+      setFoodPost({ description: "" });
 
-      return route.push("/music");
+      return route.push("/food");
     }
   };
 
-  //create a state with all the music posts
-  const [musicPosts, setMusicPosts] = useState([]);
+  //create a state with all the food posts
+  const [foodPosts, setFoodPosts] = useState([]);
 
-  const getMusicPosts = async () => {
-    const collectionRef = collection(db, "posts");
+  const getFoodPosts = async () => {
+    const collectionRef = collection(db, "food");
     const q = query(collectionRef, orderBy("timestamp", "desc"));
-    const unsubscribe = onSnapshot(q, (musicSnapshot) => {
-      setMusicPosts(
-        musicSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    const unsubscribe = onSnapshot(q, (foodSnapshot) => {
+      setFoodPosts(
+        foodSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     });
     return unsubscribe;
   };
 
   useEffect(() => {
-    getMusicPosts();
+    getFoodPosts();
   }, []);
 
   //check our user
@@ -101,27 +101,27 @@ export default function Music() {
   return (
     <>
       <div>
-        <h2 className="flex justify-center py-6">Latest in Music</h2>
+        <h2 className="flex justify-center py-6">Latest in Food</h2>
       </div>
       <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
-        <form onSubmit={submitPost}>
+        <form onSubmit={submitFoodPost}>
           <h1 className="flex justify-center">
-            {post.hasOwnProperty("id") ? "Edit Post" : "New Post"}
+            {foodPost.hasOwnProperty("id") ? "Edit Post" : "New Post"}
           </h1>
           <div className="py-2">
             <textarea
-              value={post.description}
+              value={foodPost.description}
               onChange={(e) =>
-                setPost({ ...post, description: e.target.value })
+                setFoodPost({ ...foodPost, description: e.target.value })
               }
               className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-pinkbloggy"
             ></textarea>
             <p
               className={`text-gray-600 text-xs ${
-                post.description.length > 300 ? "text-pink-500" : ""
+                foodPost.description.length > 300 ? "text-pink-500" : ""
               }`}
             >
-              {post.description.length}/300
+              {foodPost.description.length}/300
             </p>
           </div>
           <button
@@ -134,14 +134,21 @@ export default function Music() {
       </div>
 
       <div className="py-4 max-w-4xl space-y-6 mx-auto">
-        {musicPosts.map((post) => (
-          <MusicPost {...post} key={post.id} timestamp={post.timestamp}>
-            <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
+        {foodPosts.map((foodPost) => (
+          <FoodPost
+            {...foodPost}
+            key={foodPost.id}
+            timestamp={foodPost.timestamp}
+          >
+            <Link
+              href={{ pathname: `/${foodPost.id}`, query: { ...foodPost } }}
+            >
               <button>
-                {post.comments?.length > 0 ? post.comments?.length : 0} Comments
+                {foodPost.comments?.length > 0 ? foodPost.comments?.length : 0}{" "}
+                Comments
               </button>
             </Link>
-          </MusicPost>
+          </FoodPost>
         ))}
       </div>
     </>
