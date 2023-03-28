@@ -10,7 +10,9 @@ export default function DesignPost({
     const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/g;
     return text.replace(urlRegex, (url) => {
       const href = url.match(/^https?:/) ? url : `http://${url}`;
-      return `<a href="${href}" target="_blank">${url}</a>`;
+      return `<a href="${href}" target="_blank" class="${
+        url.match(urlRegex) ? "text-pinkbloggy" : ""
+      }">${url}</a>`;
     });
   };
 

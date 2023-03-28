@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import MusicPost from "@/components/musicPost";
 import FoodPost from "@/components/foodPost";
+import DesignPost from "@/components/designPost";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const [posts, setPosts] = useState([]);
   const [postUnsubscribe, setPostUnsubscribe] = useState(null);
   const [foodUnsubscribe, setFoodUnsubscribe] = useState(null);
+  const [designUnsubscribe, setDesignUnsubscribe] = useState(null);
 
   // get users data
   useEffect(() => {
@@ -30,13 +32,16 @@ export default function Dashboard() {
 
       const collectionRef = collection(db, "posts");
       const foodCollectionRef = collection(db, "food");
+      const designCollectionRef = collection(db, "design");
 
       const q = query(collectionRef, where("user", "==", user.uid));
       const foodQ = query(foodCollectionRef, where("user", "==", user.uid));
+      const designQ = query(designCollectionRef, where("user", "==", user.uid));
 
-      const [snapshot, foodSnapshot] = await Promise.all([
+      const [snapshot, foodSnapshot, designSnapshot] = await Promise.all([
         getDocs(q),
         getDocs(foodQ),
+        getDocs(designQ),
       ]);
 
       const postsData = snapshot.docs.map((doc) => ({
@@ -47,8 +52,12 @@ export default function Dashboard() {
         ...doc.data(),
         id: doc.id,
       }));
+      const designData = designSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
 
-      setPosts([...postsData, ...foodData]);
+      setPosts([...postsData, ...foodData, ...designData]);
 
       const postUnsub = onSnapshot(q, (snapshot) => {
         setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -69,6 +78,21 @@ export default function Dashboard() {
         });
       });
       setFoodUnsubscribe(() => foodUnsub);
+
+      const designUnsub = onSnapshot(designQ, (snapshot) => {
+        setPosts((prevPosts) => {
+          const designPosts = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+            type: "design",
+          }));
+          return [
+            ...prevPosts.filter((post) => post.type !== "design"),
+            ...designPosts,
+          ];
+        });
+      });
+      setDesignUnsubscribe(() => designUnsub);
     };
 
     fetchData();
@@ -79,6 +103,9 @@ export default function Dashboard() {
       }
       if (foodUnsubscribe) {
         foodUnsubscribe();
+      }
+      if (designUnsubscribe) {
+        designUnsubscribe();
       }
     };
   }, [user, loading]);
@@ -94,12 +121,27 @@ export default function Dashboard() {
     await deleteDoc(docRef);
   };
 
+  const deleteDesignPost = async (id) => {
+    const docRef = doc(db, "design", id);
+    await deleteDoc(docRef);
+  };
+
   return (
     <div>
       <div>
-        <h1 className="flex justify-center text-xl text-blackbloggy py-6">
-          {user ? `${user.displayName}'s Posts` : ""}
-        </h1>
+        <div>
+          <h1 className="flex justify-center text-xl text-blackbloggy pt-6 pb-4">
+            {user ? `${user.displayName}'s Posts` : ""}
+          </h1>
+          <div className="flex justify-center">
+            <button
+              className=" bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 my-6"
+              onClick={() => auth.signOut()}
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
         <div className="max-w-4xl mx-auto space-y-6">
           {posts.map((post) => {
             if (post.type === "music") {
@@ -138,16 +180,26 @@ export default function Dashboard() {
                   </div>
                 </FoodPost>
               );
+            } else if (post.type === "design") {
+              return (
+                <DesignPost {...post} key={post.id}>
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => deleteDesignPost(post.id)}
+                      className="text-sm flex items-center justify-center"
+                    >
+                      Delete
+                    </button>
+                    <Link href={{ pathname: "/food", query: post }}>
+                      <button className="text-sm flex items-center justify-center">
+                        Edit
+                      </button>
+                    </Link>
+                  </div>
+                </DesignPost>
+              );
             }
           })}
-        </div>
-        <div className=" ml-96">
-          <button
-            className="bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 my-4"
-            onClick={() => auth.signOut()}
-          >
-            Sign out
-          </button>
         </div>
       </div>
     </div>
