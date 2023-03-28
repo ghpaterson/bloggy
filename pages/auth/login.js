@@ -28,17 +28,17 @@ export default function Login() {
   }, [user]);
 
   return (
-    <div className="shadow-xl mt-32 p-10 textgray-800 rounded-lg">
-      <h2 className="text-2xl font-medium">Sign in</h2>
-      <div className="py-4">
-        <h3 className="py-4">Sign in with a Provider</h3>
-        <button
-          onClick={GoogleLogin}
-          className="text-white bg-gray-800 w-full font-medium rounded-lg flex align-middle p-4 gap-2"
-        >
-          <FcGoogle className="text-2xl" />
-          Sign in with Google
-        </button>
+    <div className="flex flex-col items-center justify-center">
+      <div className=" shadow-xl mt-32 p-10 textgray-800 rounded-lg">
+        <div className="py-4">
+          <button
+            onClick={GoogleLogin}
+            className="text-white bg-gray-800 max-w-3xl font-medium rounded-lg flex align-middle p-4 gap-2"
+          >
+            <FcGoogle className="text-2xl" />
+            Sign in with Google
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -13,22 +13,22 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
-import FoodPost from "@/components/foodPost";
+import DesignPost from "@/components/designPost";
 import Link from "next/link";
 
-export default function Food() {
+export default function Design() {
   //form state
-  const [foodPost, setFoodPost] = useState({ description: "" });
+  const [designPost, setDesignPost] = useState({ description: "" });
   const [user, loading] = useAuthState(auth);
   const route = useRouter();
   const updatePost = route.query;
 
   //submit post
-  const submitFoodPost = async (e) => {
+  const submitDesignPost = async (e) => {
     e.preventDefault();
 
     //run checks for description
-    if (!foodPost.description) {
+    if (!designPost.description) {
       toast.error("Field Empty", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000,
@@ -37,7 +37,7 @@ export default function Food() {
       return;
     }
 
-    if (foodPost.description.length > 300) {
+    if (designPost.description.length > 300) {
       toast.error("Too many characters", {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 2000,
@@ -46,43 +46,43 @@ export default function Food() {
       return;
     }
 
-    if (foodPost?.hasOwnProperty("id")) {
-      const docRef = doc(db, "food", foodPost.id);
-      const updatedPost = { ...foodPost, timestamp: serverTimestamp() };
+    if (designPost?.hasOwnProperty("id")) {
+      const docRef = doc(db, "design", designPost.id);
+      const updatedPost = { ...designPost, timestamp: serverTimestamp() };
       await updateDoc(docRef, updatedPost);
-      return route.push("/food");
+      return route.push("/design");
     } else {
       //make a new post
-      const collectionRef = collection(db, "food");
+      const collectionRef = collection(db, "design");
       await addDoc(collectionRef, {
-        ...foodPost,
-        type: "food",
+        ...designPost,
+        type: "design",
         timestamp: serverTimestamp(),
         user: user.uid,
         username: user.displayName,
       });
-      setFoodPost({ description: "" });
+      setDesignPost({ description: "" });
 
-      return route.push("/food");
+      return route.push("/design");
     }
   };
 
   //create a state with all the food posts
-  const [foodPosts, setFoodPosts] = useState([]);
+  const [designPosts, setDesignPosts] = useState([]);
 
-  const getFoodPosts = async () => {
-    const collectionRef = collection(db, "food");
+  const getDesignPosts = async () => {
+    const collectionRef = collection(db, "design");
     const q = query(collectionRef, orderBy("timestamp", "desc"));
-    const unsubscribe = onSnapshot(q, (foodSnapshot) => {
-      setFoodPosts(
-        foodSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    const unsubscribe = onSnapshot(q, (designSnapshot) => {
+      setDesignPosts(
+        designSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     });
     return unsubscribe;
   };
 
   useEffect(() => {
-    getFoodPosts();
+    getDesignPosts();
   }, []);
 
   //check our user
@@ -90,7 +90,7 @@ export default function Food() {
     if (loading) return;
     if (!user) route.push("/auth/login");
     if (updatePost.id) {
-      setFoodPost({ description: updatePost.description, id: updatePost.id });
+      setDesignPost({ description: updatePost.description, id: updatePost.id });
     }
   };
 
@@ -101,27 +101,27 @@ export default function Food() {
   return (
     <>
       <div>
-        <h2 className="flex justify-center py-6">Latest in Food</h2>
+        <h2 className="flex justify-center py-6">Latest in Design</h2>
       </div>
       <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
-        <form onSubmit={submitFoodPost}>
+        <form onSubmit={submitDesignPost}>
           <h1 className="flex justify-center">
-            {foodPost.hasOwnProperty("id") ? "Edit Post" : "New Post"}
+            {designPost.hasOwnProperty("id") ? "Edit Post" : "New Post"}
           </h1>
           <div className="py-2">
             <textarea
-              value={foodPost.description}
+              value={designPost.description}
               onChange={(e) =>
-                setFoodPost({ ...foodPost, description: e.target.value })
+                setDesignPost({ ...designPost, description: e.target.value })
               }
               className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-pinkbloggy"
             ></textarea>
             <p
               className={`text-gray-600 text-xs ${
-                foodPost.description.length > 300 ? "text-pink-500" : ""
+                designPost.description.length > 300 ? "text-pink-500" : ""
               }`}
             >
-              {foodPost.description.length}/300
+              {designPost.description.length}/300
             </p>
           </div>
           <button
@@ -134,21 +134,23 @@ export default function Food() {
       </div>
 
       <div className="py-4 max-w-4xl space-y-6 mx-auto">
-        {foodPosts.map((foodPost) => (
-          <FoodPost
-            {...foodPost}
-            key={foodPost.id}
-            timestamp={foodPost.timestamp}
+        {designPosts.map((designPost) => (
+          <DesignPost
+            {...designPost}
+            key={designPost.id}
+            timestamp={designPost.timestamp}
           >
             <Link
-              href={{ pathname: `/${foodPost.id}`, query: { ...foodPost } }}
+              href={{ pathname: `/${designPost.id}`, query: { ...designPost } }}
             >
               <button>
-                {foodPost.comments?.length > 0 ? foodPost.comments?.length : 0}{" "}
+                {designPost.comments?.length > 0
+                  ? designPost.comments?.length
+                  : 0}{" "}
                 Comments
               </button>
             </Link>
-          </FoodPost>
+          </DesignPost>
         ))}
       </div>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function MusicPost({
+export default function DesignPost({
   children,
   username,
   description,

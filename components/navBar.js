@@ -1,20 +1,25 @@
 import Link from "next/link";
 import { auth } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
   const [user, loading] = useAuthState(auth);
+  const router = useRouter();
   console.log(user);
 
   return (
-    <nav className=" bg-pinkbloggy flex justify-between items-center  py-10">
-      <Link href="/">
-        <button className="text-gray-50 mx-4 md:mx-60 md:text-xl hover:scale-125">
-          mr bloggy
-        </button>
-      </Link>
+    <nav className=" bg-pinkbloggy flex justify-end items-center  py-10">
+      {router.pathname !== "/" && (
+        <Link href="/">
+          <button className="text-gray-50 mx-4 md:mx-60 md:text-xl hover:scale-125">
+            mr bloggy
+          </button>
+        </Link>
+      )}
+
       <ul className="flex items-center gap-10">
-        {!user && (
+        {router.pathname !== "/auth/login" && !user && (
           <Link href={"/auth/login"}>
             <button className="text-gray-50 mx-4 hover:scale-125 md:mx-60">
               sign in
@@ -28,7 +33,7 @@ export default function NavBar() {
                 food
               </button>
             </Link>
-            <Link href="/music">
+            <Link href="/design">
               <button className="text-gray-50 mx-4 hover:scale-125">
                 design
               </button>
