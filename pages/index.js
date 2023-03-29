@@ -16,10 +16,10 @@ export default function Home() {
       <main>
         <div className="flex flex-col justify-center items-center my-20 lg:flex-row">
           <div>
-            <Image src={misterbloggy} width={300} />
+            <Image src={misterbloggy} width={400} />
           </div>
           <div>
-            <Image src={dancingpurple} width={500} />
+            <Image src={dancingpurple} width={600} />
           </div>
         </div>
       </main>
