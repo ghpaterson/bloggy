@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import misterbloggy from "../public/misterbloggy.png";
-import dancinglime from "../public/Dancinglime.png";
 import dancingpurple from "../public/Dancingpurple.png";
+import groovygpurple from "../public/GroovyDoodlebloggy.png";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
             <Image src={misterbloggy} width={400} />
           </div>
           <div>
-            <Image src={dancingpurple} width={600} />
+            <Image src={groovygpurple} width={500} />
           </div>
         </div>
       </main>
