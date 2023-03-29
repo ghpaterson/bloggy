@@ -33,7 +33,7 @@ export default function Login() {
         <div className="py-4">
           <button
             onClick={GoogleLogin}
-            className="text-white bg-gray-800 max-w-3xl font-medium rounded-lg flex align-middle p-4 gap-2"
+            className="text-bloggylime bg-gray-800 max-w-3xl font-medium rounded-lg flex align-middle p-4 gap-2"
           >
             <FcGoogle className="text-2xl" />
             Sign in with Google

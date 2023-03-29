@@ -100,50 +100,53 @@ export default function Music() {
 
   return (
     <>
-      <div>
-        <h2 className="flex justify-center py-6">Latest in Music</h2>
-      </div>
-      <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
-        <form onSubmit={submitPost}>
-          <h1 className="flex justify-center">
-            {post.hasOwnProperty("id") ? "Edit Post" : "New Post"}
-          </h1>
-          <div className="py-2">
-            <textarea
-              value={post.description}
-              onChange={(e) =>
-                setPost({ ...post, description: e.target.value })
-              }
-              className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-pinkbloggy"
-            ></textarea>
-            <p
-              className={`text-gray-600 text-xs ${
-                post.description.length > 300 ? "text-pink-500" : ""
-              }`}
+      <main className="bg-gray-100 bg-no-repeat bg-cover bg-fixed">
+        <div>
+          <h2 className="flex justify-center py-6">Latest in Music</h2>
+        </div>
+        <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
+          <form onSubmit={submitPost}>
+            <h1 className="flex justify-center">
+              {post.hasOwnProperty("id") ? "Edit Post" : "New Post"}
+            </h1>
+            <div className="py-2">
+              <textarea
+                value={post.description}
+                onChange={(e) =>
+                  setPost({ ...post, description: e.target.value })
+                }
+                className="bg-gray-300 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-brunswick"
+              ></textarea>
+              <p
+                className={`text-gray-600 text-xs ${
+                  post.description.length > 300 ? "text-bloggypurple" : ""
+                }`}
+              >
+                {post.description.length}/300
+              </p>
+            </div>
+            <button
+              className="bg-brunswick text-bloggylime py-1 px-1 rounded-md"
+              type="submit"
             >
-              {post.description.length}/300
-            </p>
-          </div>
-          <button
-            className="bg-yellowbloggy py-1 px-1 rounded-md"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
+              Submit
+            </button>
+          </form>
+        </div>
 
-      <div className="py-4 max-w-4xl space-y-6 mx-auto">
-        {musicPosts.map((post) => (
-          <MusicPost {...post} key={post.id} timestamp={post.timestamp}>
-            <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
-              <button>
-                {post.comments?.length > 0 ? post.comments?.length : 0} Comments
-              </button>
-            </Link>
-          </MusicPost>
-        ))}
-      </div>
+        <div className="py-4 max-w-4xl space-y-6 mx-auto">
+          {musicPosts.map((post) => (
+            <MusicPost {...post} key={post.id} timestamp={post.timestamp}>
+              <Link href={{ pathname: `/${post.id}`, query: { ...post } }}>
+                <button>
+                  {post.comments?.length > 0 ? post.comments?.length : 0}{" "}
+                  Comments
+                </button>
+              </Link>
+            </MusicPost>
+          ))}
+        </div>
+      </main>
     </>
   );
 }

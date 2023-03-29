@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
-import mrbloggy from "../public/mrbloggy.png";
+import misterbloggy from "../public/misterbloggy.png";
+import dancinglime from "../public/Dancinglime.png";
+import dancingpurple from "../public/Dancingpurple.png";
 
 export default function Home() {
   return (
@@ -12,19 +14,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className=" bg-pinkbloggy max-w-full h-48"></div>
-        <div className="flex items-center justify-center my-20 -mt-32 md:-mt-32">
-          <div className="pb-40 bg-transparent -mr-12 mt-4 z-0 md:-mr-12 md:mt-0">
-            <h1 className=" font-coustard text-blackbloggy ml-6 mt-6 text-2xl md:text-6xl md:ml-0 md:-mt-8">
-              mr bloggy
-            </h1>
+        <div className="flex flex-col justify-center items-center my-20 lg:flex-row">
+          <div>
+            <Image src={misterbloggy} width={400} />
           </div>
           <div>
-            <Image
-              src={mrbloggy}
-              width={400}
-              className=" -ml-8 rounded-lg mb-10 md:ml-0"
-            />
+            <Image src={dancingpurple} width={600} />
           </div>
         </div>
       </main>
