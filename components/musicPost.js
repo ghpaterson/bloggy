@@ -12,7 +12,7 @@ export default function MusicPost({
     return text.replace(urlRegex, (url) => {
       const href = url.match(/^https?:/) ? url : `http://${url}`;
       return `<a href="${href}" target="_blank" class="${
-        url.match(urlRegex) ? "text-pinkbloggy" : ""
+        url.match(urlRegex) ? "text-bloggypurple" : ""
       }">${url}</a>`;
     });
   };
