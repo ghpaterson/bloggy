@@ -9,7 +9,13 @@ export default function NavBar() {
   console.log(user);
 
   return (
-    <nav className=" bg-brunswick flex justify-center md:justify-end items-center  py-10">
+    <nav
+      className={`bg-brunswick flex justify-center ${
+        router.pathname === "/auth/login"
+          ? "md:justify-start"
+          : "md:justify-end"
+      } items-center  py-10`}
+    >
       {router.pathname !== "/" && (
         <Link href="/">
           <button className=" font-moonie text-bloggylime mx-4 md:mx-60 md:text-6xl md:w-72">
