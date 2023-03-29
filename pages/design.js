@@ -100,59 +100,64 @@ export default function Design() {
 
   return (
     <>
-      <div>
-        <h2 className="flex justify-center py-6">Latest in Design</h2>
-      </div>
-      <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
-        <form onSubmit={submitDesignPost}>
-          <h1 className="flex justify-center">
-            {designPost.hasOwnProperty("id") ? "Edit Post" : "New Post"}
-          </h1>
-          <div className="py-2">
-            <textarea
-              value={designPost.description}
-              onChange={(e) =>
-                setDesignPost({ ...designPost, description: e.target.value })
-              }
-              className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-pinkbloggy"
-            ></textarea>
-            <p
-              className={`text-gray-600 text-xs ${
-                designPost.description.length > 300 ? "text-pink-500" : ""
-              }`}
+      <main className="bg-gray-100 bg-no-repeat bg-cover bg-fixed">
+        <div>
+          <h2 className="flex justify-center py-6">Latest in Design</h2>
+        </div>
+        <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
+          <form onSubmit={submitDesignPost}>
+            <h1 className="flex justify-center">
+              {designPost.hasOwnProperty("id") ? "Edit Post" : "New Post"}
+            </h1>
+            <div className="py-2">
+              <textarea
+                value={designPost.description}
+                onChange={(e) =>
+                  setDesignPost({ ...designPost, description: e.target.value })
+                }
+                className="bg-gray-300 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-brunswick"
+              ></textarea>
+              <p
+                className={`text-gray-600 text-xs ${
+                  designPost.description.length > 300 ? "text-bloggypurple" : ""
+                }`}
+              >
+                {designPost.description.length}/300
+              </p>
+            </div>
+            <button
+              className="bg-brunswick text-bloggylime py-1 px-1 rounded-md"
+              type="submit"
             >
-              {designPost.description.length}/300
-            </p>
-          </div>
-          <button
-            className="bg-yellowbloggy py-1 px-1 rounded-md"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
+              Submit
+            </button>
+          </form>
+        </div>
 
-      <div className="py-4 max-w-4xl space-y-6 mx-auto">
-        {designPosts.map((designPost) => (
-          <DesignPost
-            {...designPost}
-            key={designPost.id}
-            timestamp={designPost.timestamp}
-          >
-            <Link
-              href={{ pathname: `/${designPost.id}`, query: { ...designPost } }}
+        <div className="py-4 max-w-4xl space-y-6 mx-auto">
+          {designPosts.map((designPost) => (
+            <DesignPost
+              {...designPost}
+              key={designPost.id}
+              timestamp={designPost.timestamp}
             >
-              <button>
-                {designPost.comments?.length > 0
-                  ? designPost.comments?.length
-                  : 0}{" "}
-                Comments
-              </button>
-            </Link>
-          </DesignPost>
-        ))}
-      </div>
+              <Link
+                href={{
+                  pathname: `/${designPost.id}`,
+                  query: { ...designPost },
+                }}
+              >
+                <button>
+                  {designPost.comments?.length > 0
+                    ? designPost.comments?.length
+                    : 0}{" "}
+                  Comments
+                </button>
+              </Link>
+            </DesignPost>
+          ))}
+        </div>
+      </main>
     </>
   );
 }

@@ -127,81 +127,83 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
+    <main className="bg-gray-100 bg-no-repeat bg-cover bg-fixed">
       <div>
         <div>
-          <h1 className="flex justify-center text-xl text-blackbloggy pt-6 pb-4">
-            {user ? `${user.displayName}'s Posts` : ""}
-          </h1>
-          <div className="flex justify-center">
-            <button
-              className=" bg-yellowbloggy text-blackbloggy rounded-md py-1 px-2 mb-6"
-              onClick={() => auth.signOut()}
-            >
-              Sign out
-            </button>
+          <div>
+            <h1 className="flex justify-center text-xl text-blackbloggy pt-6 pb-4">
+              {user ? `${user.displayName}'s Posts` : ""}
+            </h1>
+            <div className="flex justify-center">
+              <button
+                className=" bg-brunswick text-bloggylime rounded-md py-1 px-2 mb-6"
+                onClick={() => auth.signOut()}
+              >
+                Sign out
+              </button>
+            </div>
+          </div>
+          <div className="max-w-4xl mx-auto space-y-6">
+            {posts.map((post) => {
+              if (post.type === "music") {
+                return (
+                  <MusicPost {...post} key={post.id}>
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => deletePost(post.id)}
+                        className="text-sm flex items-center justify-center"
+                      >
+                        Delete
+                      </button>
+                      <Link href={{ pathname: "/music", query: post }}>
+                        <button className="text-sm flex items-center justify-center">
+                          Edit
+                        </button>
+                      </Link>
+                    </div>
+                  </MusicPost>
+                );
+              } else if (post.type === "food") {
+                return (
+                  <FoodPost {...post} key={post.id}>
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => deleteFoodPost(post.id)}
+                        className="text-sm flex items-center justify-center"
+                      >
+                        Delete
+                      </button>
+                      <Link href={{ pathname: "/food", query: post }}>
+                        <button className="text-sm flex items-center justify-center">
+                          Edit
+                        </button>
+                      </Link>
+                    </div>
+                  </FoodPost>
+                );
+              } else if (post.type === "design") {
+                return (
+                  <DesignPost {...post} key={post.id}>
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => deleteDesignPost(post.id)}
+                        className="text-sm flex items-center justify-center"
+                      >
+                        Delete
+                      </button>
+                      <Link href={{ pathname: "/design", query: post }}>
+                        <button className="text-sm flex items-center justify-center">
+                          Edit
+                        </button>
+                      </Link>
+                    </div>
+                  </DesignPost>
+                );
+              }
+            })}
           </div>
         </div>
-        <div className="max-w-4xl mx-auto space-y-6">
-          {posts.map((post) => {
-            if (post.type === "music") {
-              return (
-                <MusicPost {...post} key={post.id}>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => deletePost(post.id)}
-                      className="text-sm flex items-center justify-center"
-                    >
-                      Delete
-                    </button>
-                    <Link href={{ pathname: "/music", query: post }}>
-                      <button className="text-sm flex items-center justify-center">
-                        Edit
-                      </button>
-                    </Link>
-                  </div>
-                </MusicPost>
-              );
-            } else if (post.type === "food") {
-              return (
-                <FoodPost {...post} key={post.id}>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => deleteFoodPost(post.id)}
-                      className="text-sm flex items-center justify-center"
-                    >
-                      Delete
-                    </button>
-                    <Link href={{ pathname: "/food", query: post }}>
-                      <button className="text-sm flex items-center justify-center">
-                        Edit
-                      </button>
-                    </Link>
-                  </div>
-                </FoodPost>
-              );
-            } else if (post.type === "design") {
-              return (
-                <DesignPost {...post} key={post.id}>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => deleteDesignPost(post.id)}
-                      className="text-sm flex items-center justify-center"
-                    >
-                      Delete
-                    </button>
-                    <Link href={{ pathname: "/design", query: post }}>
-                      <button className="text-sm flex items-center justify-center">
-                        Edit
-                      </button>
-                    </Link>
-                  </div>
-                </DesignPost>
-              );
-            }
-          })}
-        </div>
       </div>
-    </div>
+    </main>
   );
 }

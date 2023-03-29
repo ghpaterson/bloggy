@@ -119,7 +119,7 @@ export default function Music() {
               ></textarea>
               <p
                 className={`text-gray-600 text-xs ${
-                  post.description.length > 300 ? "text-pink-500" : ""
+                  post.description.length > 300 ? "text-bloggypurple" : ""
                 }`}
               >
                 {post.description.length}/300
