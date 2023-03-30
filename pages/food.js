@@ -100,57 +100,61 @@ export default function Food() {
 
   return (
     <>
-      <div>
-        <h2 className="flex justify-center py-6">Latest in Food</h2>
-      </div>
-      <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
-        <form onSubmit={submitFoodPost}>
-          <h1 className="flex justify-center">
-            {foodPost.hasOwnProperty("id") ? "Edit Post" : "New Post"}
-          </h1>
-          <div className="py-2">
-            <textarea
-              value={foodPost.description}
-              onChange={(e) =>
-                setFoodPost({ ...foodPost, description: e.target.value })
-              }
-              className="bg-gray-100 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-pinkbloggy"
-            ></textarea>
-            <p
-              className={`text-gray-600 text-xs ${
-                foodPost.description.length > 300 ? "text-pink-500" : ""
-              }`}
+      <main className="bg-gray-100 bg-no-repeat bg-cover bg-fixed">
+        <div>
+          <h2 className="flex justify-center py-6">Latest in Food</h2>
+        </div>
+        <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
+          <form onSubmit={submitFoodPost}>
+            <h1 className="flex justify-center">
+              {foodPost.hasOwnProperty("id") ? "Edit Post" : "New Post"}
+            </h1>
+            <div className="py-2">
+              <textarea
+                value={foodPost.description}
+                onChange={(e) =>
+                  setFoodPost({ ...foodPost, description: e.target.value })
+                }
+                className="bg-gray-300 h-30 w-full text-gray-800 rounded-lg p-2 text-sm focus:outline-brunswick"
+              ></textarea>
+              <p
+                className={`text-gray-600 text-xs ${
+                  foodPost.description.length > 300 ? "text-bloggypurple" : ""
+                }`}
+              >
+                {foodPost.description.length}/300
+              </p>
+            </div>
+            <button
+              className="bg-brunswick text-bloggylime py-1 px-1 rounded-md"
+              type="submit"
             >
-              {foodPost.description.length}/300
-            </p>
-          </div>
-          <button
-            className="bg-yellowbloggy py-1 px-1 rounded-md"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
+              Submit
+            </button>
+          </form>
+        </div>
 
-      <div className="py-4 max-w-4xl space-y-6 mx-auto">
-        {foodPosts.map((foodPost) => (
-          <FoodPost
-            {...foodPost}
-            key={foodPost.id}
-            timestamp={foodPost.timestamp}
-          >
-            <Link
-              href={{ pathname: `/${foodPost.id}`, query: { ...foodPost } }}
+        <div className="py-4 max-w-4xl space-y-6 mx-auto">
+          {foodPosts.map((foodPost) => (
+            <FoodPost
+              {...foodPost}
+              key={foodPost.id}
+              timestamp={foodPost.timestamp}
             >
-              <button>
-                {foodPost.comments?.length > 0 ? foodPost.comments?.length : 0}{" "}
-                Comments
-              </button>
-            </Link>
-          </FoodPost>
-        ))}
-      </div>
+              <Link
+                href={{ pathname: `/${foodPost.id}`, query: { ...foodPost } }}
+              >
+                <button>
+                  {foodPost.comments?.length > 0
+                    ? foodPost.comments?.length
+                    : 0}{" "}
+                  Comments
+                </button>
+              </Link>
+            </FoodPost>
+          ))}
+        </div>
+      </main>
     </>
   );
 }

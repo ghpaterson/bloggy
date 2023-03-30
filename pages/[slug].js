@@ -43,6 +43,9 @@ export default function Details() {
 
   // get comments
   const getComments = async () => {
+    if (!routeData || !routeData.id) {
+      return;
+    }
     const docRef = doc(db, "posts", routeData.id);
     const unsubscribe = onSnapshot(docRef, (snapshot) => {
       const data = snapshot.data();
@@ -81,12 +84,15 @@ export default function Details() {
         </div>
         <div className="py-6 ">
           <h2>Comments</h2>
-          {allComment?.map((comment) => (
-            <div className="bg-gray-100 p-4 my-4 border-2" key={comment.time}>
+          {allComment?.map((comment, index) => (
+            <div
+              className="bg-gray-100 p-4 my-4 border-2"
+              key={comment?.time || index}
+            >
               <div>
-                <h2>{comment.userName}</h2>
+                <h2>{comment?.userName}</h2>
               </div>
-              <h2 className="text-sm text-gray-800">{comment.comment}</h2>
+              <h2 className="text-sm text-gray-800">{comment?.comment}</h2>
             </div>
           ))}
         </div>

@@ -7,11 +7,15 @@ module.exports = {
       fontFamily: {
         poppins: "Poppins",
         coustard: "Coustard",
+        moonie: "moonie",
       },
       colors: {
         yellowbloggy: "#FCE000",
         pinkbloggy: "#EA6EB0",
         blackbloggy: "#312424",
+        brunswick: "#32533D",
+        bloggylime: "#CCF5AC",
+        bloggypurple: "#9B489B",
       },
     },
   },
