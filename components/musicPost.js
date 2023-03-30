@@ -17,7 +17,7 @@ export default function MusicPost({
     });
   };
 
-  const formattedDescription = convertLinks(description);
+  const formattedDescription = description ? convertLinks(description) : "";
 
   return (
     <div className="bg-gray-100 p-8 border-b-2 rounded-lg">
