@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import misterbloggy from "../public/misterbloggy.png";
-import dancingpurple from "../public/Dancingpurple.png";
 import groovygpurple from "../public/GroovyDoodlebloggy.png";
 
 export default function Home() {
