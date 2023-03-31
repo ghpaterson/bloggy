@@ -102,7 +102,7 @@ export default function Food() {
     <>
       <main className="bg-gray-100 bg-no-repeat bg-cover bg-fixed">
         <div>
-          <h2 className="flex justify-center py-6">Latest in Food</h2>
+          <h2 className="flex text-2xl justify-center py-6">Latest in Food</h2>
         </div>
         <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
           <form onSubmit={submitFoodPost}>

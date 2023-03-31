@@ -18,7 +18,7 @@ export default function NavBar() {
     >
       {router.pathname !== "/" && (
         <Link href="/">
-          <button className=" font-moonie text-bloggylime mx-4 md:mx-60 md:text-6xl md:w-72">
+          <button className=" font-moonie text-bloggylime mx-4 lg:mr-60 md:text-6xl md:w-72">
             mr bloggy
           </button>
         </Link>

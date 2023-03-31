@@ -102,7 +102,9 @@ export default function Design() {
     <>
       <main className="bg-gray-100 bg-no-repeat bg-cover bg-fixed">
         <div>
-          <h2 className="flex justify-center py-6">Latest in Design</h2>
+          <h2 className="flex justify-center text-2xl py-6">
+            Latest in Design
+          </h2>
         </div>
         <div className="my-4 p-12 shadow-lg rounded-lg max-w-xl mx-auto">
           <form onSubmit={submitDesignPost}>
