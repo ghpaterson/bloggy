@@ -35,7 +35,7 @@ export default function FoodPost({
       </div>
       {children}
       <div className="text-sm text-gray-800 py-1">
-        {new Date(timestamp?.toDate()).toLocaleString()}
+        {timestamp && new Date(timestamp?.toDate()).toLocaleString()}
       </div>
     </div>
   );
